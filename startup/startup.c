@@ -8,10 +8,10 @@
 
 --[Mark3 Realtime Platform]--------------------------------------------------
 
-Copyright (c) 2018 Funkenstein Software Consulting, all rights reserved.
+Copyright (c) 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
+/**
     @file   startup.c
     @brief  ARM Cortex m3 startup code.
 
@@ -26,7 +26,7 @@ static void NmiSR(void);
 static void FaultISR(void);
 static void IntDefaultHandler(void);
 
-static uint32_t stack[2048];
+static uint32_t stack[512];
 
 extern int main(void);
 

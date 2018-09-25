@@ -8,10 +8,10 @@
 
 --[Mark3 Realtime Platform]--------------------------------------------------
 
-Copyright (c) 2018 Funkenstein Software Consulting, all rights reserved.
+Copyright (c) 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
+/**
     @file   semihosting.h
     @brief  ARM Semihosting support
  */
@@ -19,33 +19,34 @@ See license.txt for more information
 #include <stddef.h>
 #include <stdint.h>
 
-namespace Mark3 {
-
+namespace Mark3
+{
 //---------------------------------------------------------------------------
 /**
  * File mode flags, used for opening files with properties corresponding to the
  * ANSI standard file modes.
  */
 enum class FileModeFlags : uint32_t {
-    r,      // ANSI file mode "r"
-    rb,     // ANSI file mode "rb"
-    rp,     // ANSI file mode "r+"
-    rpb,    // ANSI file mode "r+b"
-    w,      // ANSI file mode "w"
-    wb,     // ANSI file mode "wb"
-    wp,     // ANSI file mode "w+"
-    wpb,    // ANSI file mode "w+b"
-    a,      // ANSI file mode "a"
-    ab,     // ANSI file mode "ab"
-    ap,     // ANSI file mode "a+"
-    apb     // ANSI file mode "a+b"
+    r,   // ANSI file mode "r"
+    rb,  // ANSI file mode "rb"
+    rp,  // ANSI file mode "r+"
+    rpb, // ANSI file mode "r+b"
+    w,   // ANSI file mode "w"
+    wb,  // ANSI file mode "wb"
+    wp,  // ANSI file mode "w+"
+    wpb, // ANSI file mode "w+b"
+    a,   // ANSI file mode "a"
+    ab,  // ANSI file mode "ab"
+    ap,  // ANSI file mode "a+"
+    apb  // ANSI file mode "a+b"
 };
 
 //---------------------------------------------------------------------------
 /**
  * Class for performing ARM semihosting calls
  */
-class SemiHosting {
+class SemiHosting
+{
 public:
     /**
      * @brief Open open a file in the host environment
