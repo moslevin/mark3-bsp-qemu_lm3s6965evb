@@ -8,10 +8,10 @@
 
 --[Mark3 Realtime Platform]--------------------------------------------------
 
-Copyright (c) 2018 Funkenstein Software Consulting, all rights reserved.
+Copyright (c) 2018 m0slevin, all rights reserved.
 See license.txt for more information
 ===========================================================================*/
-/*!
+/**
     @file   ut_support.cpp
     @brief  Unit test support for terminal output abstraction
  */
@@ -24,39 +24,31 @@ See license.txt for more information
 
 //---------------------------------------------------------------------------
 using namespace Mark3;
-namespace Mark3 {
-
+namespace Mark3
+{
 // Simple device driver for outputting data via the ARM semihosting interface
 class SemiHostedMonitor : public Driver
 {
 public:
-    virtual void     Init()
+    virtual int Init() { return 0; }
+
+    virtual int Open() { return 0; }
+
+    virtual int Close() { return 0; }
+
+    virtual size_t Read(void* pvData_, size_t uBytes_)
     {
+        SemiHosting::Read(0, pvData_, uBytes_);
+        return uBytes_;
     }
 
-    virtual uint8_t  Open()
+    virtual size_t Write(const void* pvData_, size_t uBytes_)
     {
-        return 0;
+        SemiHosting::Write(1, pvData_, uBytes_);
+        return uBytes_;
     }
 
-    virtual uint8_t  Close()
-    {
-        return 0;
-    }
-
-    virtual uint16_t Read(uint16_t u16Bytes_, uint8_t* pu8Data_)
-    {
-        SemiHosting::Read(0, pu8Data_, u16Bytes_);
-        return u16Bytes_;
-    }
-
-    virtual uint16_t Write(uint16_t u16Bytes_, uint8_t* pu8Data_)
-    {
-        SemiHosting::Write(1, pu8Data_, u16Bytes_);
-        return u16Bytes_;
-    }
-
-    virtual uint16_t Control(uint16_t u16Event_, void* pvIn_, uint16_t u16SizeIn_, void* pvOut_, uint16_t u16SizeOut_)
+    virtual int Control(uint16_t u16Event_, void* pvIn_, size_t uSizeIn_, const void* pvOut_, size_t uSizeOut_)
     {
         return 0;
     }
@@ -64,29 +56,24 @@ public:
 
 static SemiHostedMonitor clMonitor;
 
-namespace UnitTestSupport {
-void OnInit(void)
+namespace UnitTestSupport
 {
-    clMonitor.SetName("/dev/tty"); //!< Add the serial driver
-    clMonitor.Init();
+    void OnInit(void)
+    {
+        clMonitor.SetName("/dev/tty"); //!< Add the serial driver
+        clMonitor.Init();
 
-    DriverList::Add(&clMonitor);
-}
+        DriverList::Add(&clMonitor);
+    }
 
-void OnStart(void)
-{
-    clMonitor.Open();
-}
+    void OnStart(void) { clMonitor.Open(); }
 
-void OnIdle(void)
-{
-    // stub
-}
+    void OnIdle(void)
+    {
+        // stub
+    }
 
-void OnExit(int rc)
-{
-    SemiHosting::Exit(rc);
-}
+    void OnExit(int rc) { SemiHosting::Exit(rc); }
 
 } // namespace UnitTest
 } // namespace Mark3

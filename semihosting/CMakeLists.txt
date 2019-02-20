@@ -2,6 +2,7 @@ project(semihosting)
 
 set(BIN_SOURCES
         semihosting.cpp
+        kerneldebug.cpp
 )
 
 set(LIB_HEADERS
